@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index')->name('homepage');
+// Route::get('/', 'HomeController@index')->name('homepage');
 
 Auth::routes();
 
 Route::middleware('auth')->namespace('Admin')->prefix('admin')->name('admin.')
-    ->group(function() {
- 
-        
-    Route::get('/', 'HomeController@index')->name('index');
-    Route::resource('/posts', 'PostController');
-    Route::resource('/categories', 'CategoryController');
+		->group(function() {
+			// pagina di atterraggio dopo il login (con il prefisso, l'url è '/admin')
+		    Route::get('/', 'HomeController@index')->name('index');
+			Route::resource('/posts','PostController');
 });
+
+//il nostro any lo puoi sostituire con qualsiasi carattere
+Route::get('/{any?}', 'HomeController@index')->where("any", ".*");
